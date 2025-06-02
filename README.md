@@ -7,6 +7,10 @@ The simply takes in the amount paid, the name of the person that paid, the balan
 
 The app is designed to be a PWA and hence work offline after the first page load.
 
-The date of issuance of the receit is reflected on the receipt as well as the date the money was paid.
+The date of issuance of the receipt is reflected on the receipt as well as the date the money was paid.
+
+It should also include a reference number and the purpose for which the money was paid.
+
+ALso the person who received it
 
 The project is part of s group of Micro frontends for PGIS
