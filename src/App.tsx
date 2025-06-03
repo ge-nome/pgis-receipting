@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import thanks from './assets/thanks.png'
 import './App.css'
+import html2canvas from 'html2canvas'
 
 function App() {
   const [close, setClose] = useState(true)
+  const cardRef = useRef()
 
+  const capturetd = async (name) => {
+    const canvas = await html2canvas(cardRef.current, {allowTaint: true})
+    const dataUrl = canvas.toDataURL("image/png");
+
+    const link = document.createElement('a')
+      link.href = dataUrl
+      link.download = name+'png'
+      link.click()
+  }
   return (
      <div className='w-[100%]'>
       <h2 className='text-3xl text-center py-5 font-bold'>PGIS</h2>
@@ -37,8 +48,8 @@ function App() {
       </div>
       {
         !close ?
-        <div className='fixed grid justify-center items-center w-[100%] h-[100vh] z-20 bg-[#000000cc] top-0 left-0'>
-        <div className='w-[90vw] bg-[#ffffff] rounded-xl'>
+        <div  className='fixed grid justify-center items-center w-[100%] h-[100vh] z-20 bg-[#000000cc] top-0 left-0'>
+        <div className='w-[90vw] bg-[#ffffff] rounded-xl' ref={cardRef}>
           <h3 className='text-xl text-center py-3  px-4 font-bold'>PRECIOUS GIFT INTERNATIONAL SCHOOL</h3>
           <div className='rounded-t-xl w-[100%] flex justify-center'>
             <img src={thanks} alt="" className='w-[30%]'/>
@@ -81,7 +92,7 @@ function App() {
           </div>
           
         </div>
-        <button className='w-[100%] p-3 bg-[#15d087] text-white rounded text-xl font-bold'>Download Receipt</button>
+        <button className='w-[100%] p-3 bg-[#15d087] text-white rounded text-xl font-bold' onClick={()=>capturetd('Odufeko')}>Download Receipt</button>
         
         <div className='w-[100%] flex justify-center' onClick={(e)=>{e.preventDefault(); setClose(true)}}>
           <button className='self-center w-[50px] h-[50px] text-lg border border-1 border-white text-white rounded-full'>X</button>
