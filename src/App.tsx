@@ -98,28 +98,28 @@ function App() {
         //     setice(false)
         // }
         // else{
-    // const { data, error } = await supabase
-    //   .from('payments')
-    //   .insert([
-    //     { 
-    //       payer:objects.payer,
-    //       amount_paid:objects.amount_paid,
-    //       amount_left:objects.amount_left,
-    //       purpose:objects.purpose,
-    //       auth_c:objects.auth_c,
-    //       issuer:'Danula Fotom'
-    //     }
-    //   ])
+    const { data, error } = await supabase
+      .from('payments')
+      .insert([
+        { 
+          payer:objects.payer,
+          amount_paid:objects.amount_paid,
+          amount_left:objects.amount_left,
+          purpose:objects.purpose,
+          auth_c:objects.auth_c,
+          issuer:'Danula Fotom'
+        }
+      ])
 
-    // if (error) {
-    //   console.error('Insert error:', error.message)
-    //   console.log('Something went wrong.')
-    // } else {
-    //   console.log('Thanks and congratulations')
-    //   setClose(false)
-    // }
+    if (error) {
+      console.error('Insert error:', error.message)
+      console.log('Something went wrong.')
+    } else {
+      console.log('Thanks and congratulations')
+      setClose(false)
+    }
 
-    // setLoading(false)
+    setLoading(false)
   }
               
   return (
