@@ -4,6 +4,7 @@ import './App.css'
 import html2canvas from 'html2canvas'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { supabase } from './supabaseClient'
+import TOTP2FA from './authentic'
 
 
 type purposes =[
@@ -127,6 +128,7 @@ function App() {
       <h2 className='text-3xl text-center py-5 font-bold'>PGIS</h2>
       <hr className='opacity-20'/>
       <div className='m-auto w-[90%] py-5'>
+        <TOTP2FA/>
         <h3 className='text-2xl pb-4'>Receipt Processing System</h3>
         <form className='grid gap-4 w-[100%]'>
           <div className='grid gap-2'>
