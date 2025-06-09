@@ -1,9 +1,9 @@
-// TwoFASetup.jsx or .tsx (if using TypeScript)
-import { useEffect, useState } from 'react';
+// TOTP2FA.jsx or .tsx (if using TypeScript)
+import { useState } from 'react';
 import { generateTOTP, getTOTPAuthUri,verifyTOTP  } from '@epic-web/totp';
 import QRCode from 'qrcode';
 
-const TwoFASetup = ({email}) => {
+const TOTP2FA = () => {
   const [secret, setSecret] = useState('');
   const [uri, setUri] = useState('');
   const [qr, setQr] = useState('');
@@ -12,12 +12,7 @@ const TwoFASetup = ({email}) => {
   const [config, setConfig] = useState({});
   const [message, setMessage] = useState('');
 
-  useEffect(()=>{ 
-    handleSetup(email)
-  }, [])
-
-  // make a dbcall here that confirms the totp and then marks as successful the signup process. Thanks
-  const handleSetup = async (email) => {
+  const handleSetup = async () => {
     const { secret, period, digits, algorithm } = await generateTOTP()
     console.log("Generated TOTP:", secret); // Add this line
 
@@ -33,7 +28,7 @@ const TwoFASetup = ({email}) => {
       algorithm: algorithm
     });
 
-    const totpUri = getTOTPAuthUri({ period, digits, algorithm, secret: secret, accountName: email, issuer: 'MyReactApp'});
+    const totpUri = getTOTPAuthUri({ period, digits, algorithm, secret: secret, accountName: 'user@example.com', issuer: 'MyReactApp'});
     const qr = await QRCode.toDataURL(totpUri);
 
     setUri(totpUri);
@@ -53,22 +48,23 @@ const TwoFASetup = ({email}) => {
 
 
   return (
-    <div className='w-[100%]'>
-      {email}
-      {/* {!secret && (
+    <div style={{ maxWidth: '400px', margin: '2rem auto', fontFamily: 'Arial' }}>
+      <h2>🔐 Google Authenticator 2FA</h2>
+
+      {!secret && (
         <button onClick={handleSetup}>Generate Secret & Show QR</button>
-      )} */}
+      )}
 
       {qr && (
-        <div className='mt-4 text-center'>
+        <div style={{ marginTop: '1rem' }}>
           <p>Scan this QR code with Google Authenticator:</p>
-          <img src={qr} alt="TOTP QR Code" className='w-[100%]' />
+          <img src={qr} alt="TOTP QR Code" style={{ width: '200px' }} />
           <p><strong>Backup Secret:</strong> {secret}</p>
         </div>
       )}
 
       {qr && (
-        <div className='my-4'>
+        <div style={{ marginTop: '1rem' }}>
           <p>Enter the 6-digit code from your app:</p>
           <input
             type="text"
@@ -76,9 +72,9 @@ const TwoFASetup = ({email}) => {
             onChange={(e) => setOtpInput(e.target.value)}
             placeholder="123456"
             maxLength={6}
-            className="rounded h-[40px] p-2 w-[100%] my-4 border border-1 border-gray-400"
+            style={{ padding: '0.5rem', width: '100%' }}
           />
-          <button onClick={handleVerify} className='w-[100%] p-3 text-white bg-[#212121] rounded text-xl font-bold'>
+          <button onClick={handleVerify} style={{ marginTop: '0.5rem' }}>
             Verify Code
           </button>
         </div>
@@ -91,4 +87,4 @@ const TwoFASetup = ({email}) => {
   );
 };
 
-export default TwoFASetup;
+export default TOTP2FA;
